@@ -1,6 +1,6 @@
 public class Cell {
     private int type;
-    private String coord;
+    private char[] coord = new char[2];
     private boolean isShown = false;
     public int getType() {
         return type;
@@ -10,12 +10,13 @@ public class Cell {
         this.type = newType;
     }
 
-    public String getCoord() {
+    public char[] getCoord() {
         return coord;
     }
 
-    public void setCoord(String newCoord) {
-        this.coord = newCoord;
+    public void setCoord(char x, char y) {
+        this.coord[0] = x;
+        this.coord[1] = y;
     }
 public boolean getShown() {
         return isShown;

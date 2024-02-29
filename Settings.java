@@ -1,5 +1,5 @@
 public class Settings {
-    private int gridSize = 2;
+    private int gridSize = 5;
     public int getGridSize() {
         return gridSize;
     }

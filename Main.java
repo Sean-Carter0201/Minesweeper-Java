@@ -13,23 +13,7 @@ public class Main {
         Settings settings = new Settings();
         Board board = new Board();
         int gridSize = settings.getGridSize();
-        char[][] grid = board.createGrid(gridSize);
-        char[][] axes = board.createAxes(gridSize);
-        for (int i = 0; i < gridSize; i++) {
-            axes[0][i] = (char) ((gridSize - i) + '0');
-            axes[1][i] = numToChar(i + 1);
-            for (int j = 0; j < gridSize; j++) {
-                Cell cell = new Cell();
-                if (cell.getShown()) {
-                    grid[i][j] = (char) (cell.getType() + '0');
-                } else {
-                    grid[i][j] = 'X';
-                }
-                }
-            System.out.println(axes[0][i] + " " + Arrays.toString(grid[i]));
-        }
-        System.out.println("  " + Arrays.toString(axes[1]));
-
+        board.createBoard(board, gridSize);
     }
 }
 
