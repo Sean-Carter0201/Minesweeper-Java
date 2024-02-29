@@ -11,9 +11,8 @@ public class Main {
     }
     public static void main(String[] args) {
         Settings settings = new Settings();
-        Board board = new Board();
         int gridSize = settings.getGridSize();
-        board.createBoard(board, gridSize);
+        Board board = Board.createBoard(gridSize);
     }
 }
 
