@@ -1,23 +1,23 @@
 public class Settings {
-    private int gridSize = 3;
+    private int gridSize = 18;
     public int getGridSize() {
         return gridSize;
     }
     public void setGridSize(int newGridSize) {
         this.gridSize = newGridSize;
     }
-    private int difficulty = 0;
-    public int getDifficulty() {
+    private double difficulty = 0.1234567;
+    public double getDifficulty() {
         return difficulty;
     }
-    public void setDifficulty(int newDifficulty) {
+    public void setDifficulty(double newDifficulty) {
         this.difficulty = newDifficulty;
     }
-    private int bombPercent;
-    public int getBombPercent() {
-        return bombPercent;
+    private boolean challengeMode = true;
+    public boolean getChallengeMode() {
+        return challengeMode;
     }
-    public void setBombPercent(int newBombPercent) {
-        this.bombPercent = newBombPercent;
+    public void setChallengeMode(boolean newChallengeMode) {
+        this.challengeMode = newChallengeMode;
     }
 }

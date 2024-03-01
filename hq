@@ -1,0 +1,36 @@
+[33mcommit 42beabfb0689733a3bb50a17be52dc82b8afdaa2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: unknown <sean.carter0201@gmail.com>
+Date:   Fri Mar 1 09:48:23 2024 +0000
+
+    Coord validation done, trying to make it faster
+
+[33mcommit 14e2d2e28e34d061c2bea80d74d4eaa99025fb4b[m
+Author: unknown <sean.carter0201@gmail.com>
+Date:   Thu Feb 29 17:52:26 2024 +0000
+
+    Making board arraylist progress in case I have to
+
+[33mcommit 678f9494cfd172a2430d4d760a778ccf85c2a2aa[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: unknown <sean.carter0201@gmail.com>
+Date:   Thu Feb 29 16:55:29 2024 +0000
+
+    Board works, want to make grid and axes attr.
+
+[33mcommit b6f4d3781085ef37c01eae16fe66c2b3c74258a4[m
+Author: unknown <sean.carter0201@gmail.com>
+Date:   Thu Feb 29 14:05:58 2024 +0000
+
+    Axes working, but printing brackets
+
+[33mcommit 4ad1d19c869ac7fad94be0d90d7e2c2bfd64a767[m
+Author: unknown <sean.carter0201@gmail.com>
+Date:   Thu Feb 29 10:26:11 2024 +0000
+
+    Demonstrating changes
+    Please enter the commit message for your changes. Lines starting
+
+[33mcommit db247c463e45dde37e053d3e4fb3f3c20b8fee2d[m
+Author: unknown <sean.carter0201@gmail.com>
+Date:   Thu Feb 29 10:11:59 2024 +0000
+
+    first commit

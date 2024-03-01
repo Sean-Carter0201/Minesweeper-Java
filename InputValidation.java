@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.Arrays;
 public class InputValidation {
@@ -31,30 +32,38 @@ public class InputValidation {
         return answer;
     }
 
-    public static boolean verifyYesNo(String input) {
+    public static boolean verifyTwoChoice(String input, String option1, String option2) {
         System.out.println(input);
         Scanner reader = new Scanner(System.in);
         String answer = reader.next();
-        while (!answer.equalsIgnoreCase("yes") && !answer.equalsIgnoreCase("no")) {
-            System.out.println("Please answer yes or no.");
+        while (!answer.equalsIgnoreCase(option1) && !answer.equalsIgnoreCase(option2)) {
+            System.out.println("Please answer " + option1 + " or " + option2 + ".");
             answer = reader.next();
         }
-        return answer.equalsIgnoreCase("yes");
+        return answer.equalsIgnoreCase(option1);
     }
-    public static String verifyCoord(char[][] axes, String input) {
+    public static String verifyCoord(Board board, String input) {
+        char[][] axes = board.getAxes();
         Scanner reader = new Scanner(System.in);
         String answer;
-        boolean check;
         do {
-            System.out.println(input); //Needs to become input to add flagging
+            System.out.println(input);
             answer = reader.next();
-            System.out.println();
-            check = !(Arrays.toString(axes[0]).contains("" + Character.toUpperCase(answer.charAt(0))) &&
-                    Arrays.toString(axes[1]).contains("" + answer.charAt(1)) && answer.length() == 2);
-            if (check) {
+            answer = answer.toUpperCase();
+            while (!(Arrays.toString(axes[0]).contains("" + answer.charAt(0)) &&
+                    Arrays.toString(axes[1]).contains("" + answer.charAt(1)) && answer.length() == 2)) {
                 System.out.println("Sorry, that is not a valid coordinate.");
+                answer = reader.next();
+                answer = answer.toUpperCase();
             }
-        } while (check);
+        }
+        while (isShown(board, answer) == 1);
         return answer;
+    }
+    public static int isShown (Board board, String coord) {
+        Cell[][] grid = board.getGrid();
+        int size = grid.length;
+        int[] index = Main.coordToIndex(coord, size);
+        return grid[index[0]][index[1]].getStatus();
     }
 }
