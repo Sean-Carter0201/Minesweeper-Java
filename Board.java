@@ -1,37 +1,38 @@
-import java.util.ArrayList;
-
 public class Board {
-    private ArrayList<Cell> grid;
-    private ArrayList<Character>[] axes = new ArrayList[2];
-    public ArrayList<Cell> getGrid() {
+    final private Cell[][] grid;
+    final private char[][] axes;
+    public Board(Cell[][] newGrid, char[][] newAxes) {  //Constructor Class for Board
+        grid = newGrid;
+        axes = newAxes;
+    }
+    public Cell[][] getGrid() {
         return grid;
     }
-    public ArrayList<Character>[] getAxes() {
+    public char[][] getAxes() {
         return axes;
     }
     public static Board createBoard(int gridSize) {
-        Board board = new Board();
-        ArrayList<Cell> newGrid = board.getGrid();
-        ArrayList<Character>[] newAxes = board.getAxes();
+        Cell[][] grid = new Cell[gridSize][gridSize];
+        char[][] axes = new char[2][gridSize];
+        Board board = new Board(grid, axes);
         StringBuilder xAxis = new StringBuilder("   ");
         for (int i = 0; i < gridSize; i++) {
-            newAxes[1].add((char) ((gridSize - i) + '0'));
-            System.out.println(newAxes[1]);
-            StringBuilder line = new StringBuilder(newAxes[1].get(i) + "  ");
+            axes[1][gridSize - i - 1] = (char) ((gridSize - i) + '0');
+            StringBuilder line = new StringBuilder(axes[1][gridSize - i - 1] + "  ");
             for (int j = 0; j < gridSize; j++) {
                 if (i == 0) {
-                    newAxes[0].set(j, Main.numToChar(j + 1));
+                    axes[0][j] = Main.numToChar(j + 1);
                 }
                 Cell cell = new Cell();
-                newGrid.add(cell);
+                grid[i][j] = cell;
                 if (cell.getShown()) {
-                    line.append(newGrid.get(i).getType());
+                    line.append(grid[i][j].getType());
                 } else {
                     line.append("X ");
                 }
-                cell.setCoord(newAxes[0].get(j), newAxes[1].get(i));
+                cell.setCoord(axes[0][j], axes[1][gridSize - i - 1]);
             }
-            xAxis.append(newAxes[0].get(i)).append(" ");
+            xAxis.append(axes[0][i]).append(" ");
             System.out.println(line);
         }
         System.out.println(xAxis);

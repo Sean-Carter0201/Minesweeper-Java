@@ -44,14 +44,17 @@ public class InputValidation {
     public static String verifyCoord(char[][] axes, String input) {
         Scanner reader = new Scanner(System.in);
         String answer;
+        boolean check;
         do {
-            System.out.println("Please enter an unexplored coordinate: "); //Needs to become input to add flagging
+            System.out.println(input); //Needs to become input to add flagging
             answer = reader.next();
-            if (!(Arrays.asList(axes[0]).contains(answer.charAt(0)) &&
-                    Arrays.asList(axes[1]).contains(answer.charAt(1)) && answer.length() == 2)) {
+            System.out.println();
+            check = !(Arrays.toString(axes[0]).contains("" + Character.toUpperCase(answer.charAt(0))) &&
+                    Arrays.toString(axes[1]).contains("" + answer.charAt(1)) && answer.length() == 2);
+            if (check) {
                 System.out.println("Sorry, that is not a valid coordinate.");
             }
-        } while (false);
+        } while (check);
         return answer;
     }
 }
