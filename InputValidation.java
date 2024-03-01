@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -43,15 +44,15 @@ public class InputValidation {
         return answer.equalsIgnoreCase(option1);
     }
     public static String verifyCoord(Board board, String input) {
-        char[][] axes = board.getAxes();
+        ArrayList<String>[] axes = board.getAxes();
         Scanner reader = new Scanner(System.in);
         String answer;
         do {
             System.out.println(input);
             answer = reader.next();
             answer = answer.toUpperCase();
-            while (!(Arrays.toString(axes[0]).contains("" + answer.charAt(0)) &&
-                    Arrays.toString(axes[1]).contains("" + answer.charAt(1)) && answer.length() == 2)) {
+            while (!(axes[0].contains("" + answer.charAt(0)) &&
+                    axes[1].contains(answer.substring(1)))) {
                 System.out.println("Sorry, that is not a valid coordinate.");
                 answer = reader.next();
                 answer = answer.toUpperCase();

@@ -3,16 +3,18 @@ import java.util.Collections;
 
 public class Board {
     final private Cell[][] grid;
-    final private char[][] axes;
-    public Board(Cell[][] newGrid, char[][] newAxes,Settings settings) {  //Constructor Class for Board
+    private ArrayList[] axes = new ArrayList[2];
+    public Board(Cell[][] newGrid, ArrayList<String>[] newAxes,Settings settings) {  //Constructor Class for Board
         grid = newGrid;
         axes = newAxes;
         int gridSize = newGrid.length;
+
         for (int i = 0; i < gridSize; i++) {
-            axes[0][i] = Main.numToChar(i + 1);
-            axes[1][gridSize - i - 1] = (char) ((gridSize - i) + '0');
+            axes[0].add(Main.numToChar(i + 1));
+            axes[1].add(String.valueOf(((gridSize - i))));
             for (int j = 0; j < gridSize; j++) {
                 Cell cell = new Cell(settings.getDifficulty());
+
                 grid[i][j] = cell;
                 cell.setCoord(i, j);
             }
@@ -37,15 +39,19 @@ public class Board {
     public Cell[][] getGrid() {
         return grid;
     }
-    public char[][] getAxes() {
+    public ArrayList<String>[] getAxes() {
         return axes;
     }
-    public void createScreen(Cell[][] grid, char[][] axes) {
+    public void createScreen(Cell[][] grid, ArrayList[] axes) {
         int gridSize = grid.length;
-        StringBuilder xAxis = new StringBuilder("   ");
+        StringBuilder xAxis = new StringBuilder("    ");
         for (int i = 0; i < gridSize; i++) {
-
-            StringBuilder line = new StringBuilder(axes[1][gridSize - i - 1] + "  ");
+            StringBuilder line = new StringBuilder();
+            if (gridSize - i < 10) {
+                line.append(axes[1].get(i) + "   ");
+            } else {
+                line.append(axes[1].get(i) + "  ");
+            }
             for (int j = 0; j < gridSize; j++) {
                 Cell cell =  grid[i][j];
                 switch (cell.getStatus()) {
@@ -60,7 +66,7 @@ public class Board {
                         break;
                 }
             }
-            xAxis.append(axes[0][i]).append(" ");
+            xAxis.append(axes[0].get(i)).append(" ");
             System.out.println(line);
         }
         System.out.println(xAxis);
