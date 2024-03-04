@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InputValidation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">InputValidation.java</span></div><h1>InputValidation.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.Arrays;
+<span class="nc" id="L5">public class InputValidation {</span>
+    public static double verifyDouble(String input) {
+        double answer;
+<span class="nc" id="L8">        Scanner reader = new Scanner(System.in);</span>
+        do {
+<span class="nc" id="L10">            System.out.println(input);</span>
+<span class="nc bnc" id="L11" title="All 2 branches missed.">            while (!reader.hasNextDouble()) {</span>
+<span class="nc" id="L12">                System.out.println(&quot;That's not a valid dimension.&quot;);</span>
+<span class="nc" id="L13">                System.out.println(input);</span>
+<span class="nc" id="L14">                reader.next();</span>
+            }
+<span class="nc" id="L16">            answer = reader.nextDouble();</span>
+<span class="nc bnc" id="L17" title="All 2 branches missed.">        } while (answer &lt;= 0);</span>
+<span class="nc" id="L18">        return answer;</span>
+    }
+
+    public static int verifyPosInt(String input) {
+        int answer;
+<span class="nc" id="L23">        Scanner reader = new Scanner(System.in);</span>
+        do {
+<span class="nc" id="L25">            System.out.println(input);</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">            while (!reader.hasNextInt()) {</span>
+<span class="nc" id="L27">                System.out.println(&quot;Positive whole numbers please.&quot;);</span>
+<span class="nc" id="L28">                System.out.println(input);</span>
+<span class="nc" id="L29">                reader.next();</span>
+            }
+<span class="nc" id="L31">            answer = reader.nextInt();</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        } while (answer &lt;= 0);</span>
+<span class="nc" id="L33">        return answer;</span>
+    }
+
+    public static boolean verifyTwoChoice(String input, String option1, String option2) {
+<span class="nc" id="L37">        System.out.println(input);</span>
+<span class="nc" id="L38">        Scanner reader = new Scanner(System.in);</span>
+<span class="nc" id="L39">        String answer = reader.nextLine();</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        while (!answer.equalsIgnoreCase(option1) &amp;&amp; !answer.equalsIgnoreCase(option2)) {</span>
+<span class="nc" id="L41">            System.out.println(&quot;Please answer &quot; + option1 + &quot; or &quot; + option2 + &quot;.&quot;);</span>
+<span class="nc" id="L42">            answer = reader.next();</span>
+        }
+<span class="nc" id="L44">        return answer.equalsIgnoreCase(option1);</span>
+    }
+    public static String verifyCoord(Board board, String input) {
+<span class="nc" id="L47">        ArrayList&lt;String&gt;[] axes = board.getAxes();</span>
+<span class="nc" id="L48">        Scanner reader = new Scanner(System.in);</span>
+        String answer;
+        do {
+<span class="nc" id="L51">            System.out.println(input);</span>
+<span class="nc" id="L52">            answer = reader.next();</span>
+<span class="nc" id="L53">            answer = answer.toUpperCase();</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            while (!(axes[0].contains(&quot;&quot; + answer.charAt(0)) &amp;&amp;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">                    axes[1].contains(answer.substring(1)))) {</span>
+<span class="nc" id="L56">                System.out.println(&quot;Sorry, that is not a valid coordinate.&quot;);</span>
+<span class="nc" id="L57">                answer = reader.next();</span>
+<span class="nc" id="L58">                answer = answer.toUpperCase();</span>
+            }
+        }
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        while (isShown(board, answer) == 1);</span>
+<span class="nc" id="L62">        return answer;</span>
+    }
+    public static int isShown (Board board, String coord) {
+<span class="nc" id="L65">        Cell[][] grid = board.getGrid();</span>
+<span class="nc" id="L66">        int size = grid.length;</span>
+<span class="nc" id="L67">        int[] index = Main.coordToIndex(coord, size);</span>
+<span class="nc" id="L68">        return grid[index[0]][index[1]].getStatus();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

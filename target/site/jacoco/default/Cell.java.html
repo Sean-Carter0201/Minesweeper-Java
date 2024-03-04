@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cell.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Cell.java</span></div><h1>Cell.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+
+public class Cell {
+    private int type;
+<span class="fc" id="L5">    private int[] coord = new int[2];</span>
+<span class="fc" id="L6">    int status = 0;</span>
+    public int getType() {
+<span class="fc" id="L8">        return type;</span>
+    }
+
+    public void setType(int newType) {
+<span class="fc" id="L12">        this.type = newType;</span>
+<span class="fc" id="L13">    }</span>
+
+    public int[] getCoord() {
+<span class="fc" id="L16">        return coord;</span>
+    }
+
+    public void setCoord(int x, int y) {
+<span class="fc" id="L20">        this.coord[0] = x;</span>
+<span class="fc" id="L21">        this.coord[1] = y;</span>
+<span class="fc" id="L22">    }</span>
+    public int getStatus() {
+<span class="nc" id="L24">        return status;</span>
+    }
+
+    public void setStatus(int newStatus) {
+<span class="nc" id="L28">        this.status = newStatus;</span>
+<span class="nc" id="L29">    }</span>
+<span class="fc" id="L30">    public Cell(double bombChance) {</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (Math.random() &lt; bombChance) {</span>
+<span class="fc" id="L32">            type = -1;</span>
+        } else {
+<span class="fc" id="L34">            type = 0;</span>
+        }
+<span class="fc" id="L36">    }</span>
+    public ArrayList&lt;int[]&gt; surroundingCellTypes (Cell[][] grid, int x, int y) {
+<span class="fc" id="L38">        int gridSize = grid.length;</span>
+<span class="fc" id="L39">        ArrayList&lt;int[]&gt; types = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (int i = -1; i &lt;= 1; i++) {</span>
+<span class="fc" id="L41">            int itest =  x + i;</span>
+<span class="fc bfc" id="L42" title="All 4 branches covered.">            if (0 &lt;= itest &amp;&amp; itest &lt; gridSize) {</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">                for (int j = -1; j &lt;= 1; j++) {</span>
+<span class="fc" id="L44">                    int jtest = y + j;</span>
+<span class="fc bfc" id="L45" title="All 4 branches covered.">                    if (0 &lt;= jtest &amp;&amp; jtest &lt; gridSize) {</span>
+<span class="fc" id="L46">                        types.add(new int[]{itest, jtest});</span>
+                    }
+                }
+            }
+        }
+<span class="fc" id="L51">        return types;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+import java.util.Collections;
+
+public class Board {
+    final private Cell[][] grid;
+    private ArrayList&lt;String&gt;[] axes;
+<span class="fc" id="L7">    private ArrayList&lt;int[]&gt; flagList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L8">    public Board(Settings settings) {  //Constructor Class for Board</span>
+<span class="fc" id="L9">        int gridSize = settings.getGridSize();</span>
+<span class="fc" id="L10">        Cell[][] newGrid = new Cell[gridSize][gridSize];</span>
+<span class="fc" id="L11">        ArrayList[] newAxes = new ArrayList[2];</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        for (int i = 0; i &lt; 2; i++) {</span>
+<span class="fc" id="L13">            newAxes[i] = new ArrayList&lt;String&gt;();</span>
+        }
+<span class="fc" id="L15">        grid = newGrid;</span>
+<span class="fc" id="L16">        axes = newAxes;</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        for (int i = 0; i &lt; gridSize; i++) {</span>
+<span class="fc" id="L18">            axes[0].add(Main.numToChar(i + 1));</span>
+<span class="fc" id="L19">            axes[1].add(String.valueOf(((gridSize - i))));</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">            for (int j = 0; j &lt; gridSize; j++) {</span>
+<span class="fc" id="L21">                Cell cell = new Cell(settings.getDifficulty());</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">                if (cell.getType() == -1) {</span>
+<span class="fc" id="L23">                    settings.setBombNum(settings.getBomNum() + 1);</span>
+                }
+<span class="fc" id="L25">                grid[i][j] = cell;</span>
+<span class="fc" id="L26">                cell.setCoord(i, j);</span>
+            }
+        }
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (int i = 0; i &lt; gridSize; i++) {</span>
+<span class="fc" id="L30">            ArrayList&lt;Integer&gt; test = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            for (int j = 0; j &lt; gridSize; j++) {</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">                if (grid[i][j].getType() != -1) {</span>
+<span class="fc" id="L33">                    ArrayList&lt;int[]&gt; cells = grid[i][j].surroundingCellTypes(grid, i, j);</span>
+<span class="fc" id="L34">                    ArrayList&lt;Integer&gt; cellTypes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                    for (int[] x : cells) {</span>
+<span class="fc" id="L36">                        cellTypes.add(grid[x[0]][x[1]].getType());</span>
+<span class="fc" id="L37">                    }</span>
+<span class="fc" id="L38">                    int type = Collections.frequency(cellTypes, -1);</span>
+<span class="fc" id="L39">                    grid[i][j].setType(type);</span>
+                }
+<span class="fc" id="L41">                test.add(grid[i][j].getType());</span>
+            }
+            //System.out.println(test);
+        }
+<span class="fc" id="L45">    }</span>
+    public Cell[][] getGrid() {
+<span class="fc" id="L47">        return grid;</span>
+    }
+    public ArrayList&lt;String&gt;[] getAxes() {
+<span class="nc" id="L50">        return axes;</span>
+    }
+    public ArrayList&lt;int[]&gt; getFlagList() {
+<span class="nc" id="L53">        return flagList;</span>
+    }
+    public void appendFlagList(int[] coord) {
+<span class="nc" id="L56">        flagList.add(coord);</span>
+<span class="nc" id="L57">    }</span>
+    public void popFlagList (int[] coord) {
+<span class="nc" id="L59">        flagList.remove(coord);</span>
+<span class="nc" id="L60">    }</span>
+    public int createScreen(Cell[][] grid, ArrayList[] axes, int bombNum) {
+<span class="nc" id="L62">        int gridSize = grid.length;</span>
+<span class="nc" id="L63">        int cellsLeft = 0;</span>
+<span class="nc" id="L64">        StringBuilder xAxis = new StringBuilder(&quot;    &quot;);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        for (int i = 0; i &lt; gridSize; i++) {</span>
+<span class="nc" id="L66">            StringBuilder line = new StringBuilder();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (gridSize - i &lt; 10) {</span>
+<span class="nc" id="L68">                line.append(axes[1].get(i) + &quot;   &quot;);</span>
+            } else {
+<span class="nc" id="L70">                line.append(axes[1].get(i) + &quot;  &quot;);</span>
+            }
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            for (int j = 0; j &lt; gridSize; j++) {</span>
+<span class="nc" id="L73">                Cell cell =  grid[i][j];</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">                switch (cell.getStatus()) {</span>
+                    case 0:
+<span class="nc" id="L76">                        line.append(&quot;X &quot;);</span>
+<span class="nc" id="L77">                        cellsLeft ++;</span>
+<span class="nc" id="L78">                        break;</span>
+                    case 1:
+<span class="nc" id="L80">                        line.append(grid[i][j].getType()).append(&quot; &quot;);</span>
+<span class="nc" id="L81">                        break;</span>
+                    case 2:
+<span class="nc" id="L83">                        line.append(&quot;F &quot;);</span>
+<span class="nc" id="L84">                        cellsLeft ++;</span>
+                        break;
+                }
+            }
+<span class="nc" id="L88">            xAxis.append(axes[0].get(i)).append(&quot; &quot;);</span>
+<span class="nc" id="L89">            System.out.println(line);</span>
+        }
+<span class="nc" id="L91">        System.out.println(xAxis);</span>
+<span class="nc" id="L92">        System.out.println(&quot;There are &quot; + bombNum + &quot; bombs on the board.&quot;);</span>
+<span class="nc" id="L93">        return cellsLeft;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

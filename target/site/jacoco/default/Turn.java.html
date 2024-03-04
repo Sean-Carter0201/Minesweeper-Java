@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Turn.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Turn.java</span></div><h1>Turn.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+
+<span class="nc" id="L3">public class Turn {</span>
+    private int[] coord;
+    private boolean flagCheck;
+<span class="nc" id="L6">    private boolean goodTurn = true;</span>
+    public void setCoord(int[] answer) {
+<span class="nc" id="L8">        coord = answer;</span>
+<span class="nc" id="L9">    }</span>
+    public int[] getCoord() {
+<span class="nc" id="L11">        return coord;</span>
+    }
+    public void setFlagCheck(boolean action) {
+<span class="nc" id="L14">        flagCheck = action;</span>
+<span class="nc" id="L15">    }</span>
+    public boolean getFlagCheck() {
+<span class="nc" id="L17">        return flagCheck;</span>
+    }
+    public void setGoodTurn(boolean action) {
+<span class="nc" id="L20">        goodTurn = action;</span>
+<span class="nc" id="L21">    }</span>
+    public boolean getGoodTurn() {
+<span class="nc" id="L23">        return goodTurn;</span>
+    }
+    public boolean chooseAction() {
+<span class="nc" id="L26">        return InputValidation.verifyTwoChoice(&quot;Do you wish to flag/unflag a cell, or explore a new one?&quot;,</span>
+                &quot;Flag&quot;, &quot;Explore&quot;);
+
+    }
+    public static boolean takeTurn(Board board, int bombNum) {
+<span class="nc" id="L31">        Turn turn = new Turn();</span>
+<span class="nc" id="L32">        turn.setFlagCheck(turn.chooseAction());</span>
+<span class="nc" id="L33">        Cell[][] grid = board.getGrid();</span>
+<span class="nc" id="L34">        int size = grid.length;</span>
+<span class="nc" id="L35">        String coord = InputValidation.verifyCoord(board, &quot;Please enter an unexplored coordinate: &quot;);</span>
+<span class="nc" id="L36">        int[] index = Main.coordToIndex(coord, size);</span>
+<span class="nc" id="L37">        turn.setCoord(index);</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (turn.getFlagCheck()) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">            if (board.getFlagList().size() &lt; bombNum) {</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                if (grid[index[0]][index[1]].getStatus() == 2) {</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">                    if (InputValidation.verifyTwoChoice(&quot;Do you wish to unflag this coordinate?&quot;,</span>
+                            &quot;Yes&quot;, &quot;No&quot;)) {
+<span class="nc" id="L43">                        grid[index[0]][index[1]].setStatus(0);</span>
+<span class="nc" id="L44">                        board.popFlagList(grid[index[0]][index[1]].getCoord());</span>
+                    }
+                } else {
+<span class="nc" id="L47">                    grid[index[0]][index[1]].setStatus(2);</span>
+<span class="nc" id="L48">                    board.appendFlagList(grid[index[0]][index[1]].getCoord());</span>
+                }
+            } else {
+<span class="nc" id="L51">                System.out.println(bombNum + &quot; coordinates flagged already, you may only flag as many coordinates as there are bombs.&quot;);</span>
+            }
+
+        } else {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if (grid[index[0]][index[1]].getStatus() == 2) {</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">                if (InputValidation.verifyTwoChoice(&quot;Are you sure? You flagged this coordinate.&quot;,</span>
+                        &quot;Yes&quot;, &quot;No&quot;)) {
+<span class="nc" id="L58">                    int type = grid[index[0]][index[1]].getType();</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">                    if (type == -1) {</span>
+<span class="nc" id="L60">                        System.out.println(&quot;You lose!&quot;);</span>
+<span class="nc" id="L61">                        turn.setGoodTurn(false);</span>
+                    } else {
+<span class="nc" id="L63">                        recursiveCellStatus(grid, index);</span>
+                        }
+<span class="nc" id="L65">                }</span>
+            } else {
+<span class="nc" id="L67">                int type = grid[index[0]][index[1]].getType();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                if (type == -1) {</span>
+<span class="nc" id="L69">                    System.out.println(&quot;You lose!&quot;);</span>
+<span class="nc" id="L70">                    turn.setGoodTurn(false);</span>
+                } else {
+<span class="nc" id="L72">                    recursiveCellStatus(grid, index);</span>
+                }
+            }
+        }
+<span class="nc" id="L76">        return turn.getGoodTurn();</span>
+    }
+    public static void recursiveCellStatus (Cell[][] grid, int[] index) {
+<span class="nc bnc" id="L79" title="All 4 branches missed.">        if (grid[index[0]][index[1]].getType() != -1 &amp;&amp; grid[index[0]][index[1]].getStatus() != 1) {</span>
+<span class="nc" id="L80">            grid[index[0]][index[1]].setStatus(1);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            if (grid[index[0]][index[1]].getType() == 0) {</span>
+<span class="nc" id="L82">                ArrayList&lt;int[]&gt; cellLoop = grid[index[0]][index[1]].surroundingCellTypes(grid, index[0], index[1]);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                for (int[] x : cellLoop) {</span>
+<span class="nc" id="L84">                    recursiveCellStatus(grid, x);</span>
+<span class="nc" id="L85">                }</span>
+            }
+        }
+<span class="nc" id="L88">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

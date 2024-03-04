@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Minesweeper</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+
+<span class="nc" id="L3">public class Main {</span>
+    public static int charToNum(char letter) {
+<span class="nc" id="L5">        int number = Character.getNumericValue(letter);</span>
+<span class="nc" id="L6">        return number - 9;</span>
+    }
+    public static String numToChar(int number) {
+<span class="fc" id="L9">        return ((char) (number + 64) + &quot;&quot;);</span>
+    }
+    public static int[] coordToIndex (String coord, int size) {
+<span class="nc" id="L12">        return new int[]{size - (coord.charAt(1) - '0'), Main.charToNum(coord.charAt(0)) - 1};</span>
+    }
+    public static void main(String[] args) {
+<span class="nc" id="L15">        Settings settings = new Settings();</span>
+<span class="nc" id="L16">        Board board = new Board(settings);</span>
+<span class="nc" id="L17">        Cell[][] grid = board.getGrid();</span>
+<span class="nc" id="L18">        ArrayList&lt;String&gt;[] axes = board.getAxes();</span>
+<span class="nc" id="L19">        int bombNum = settings.getBomNum();</span>
+<span class="nc" id="L20">        boolean safe = true;</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        while (safe) {</span>
+<span class="nc" id="L22">            int cellsLeft = board.createScreen(grid, axes, bombNum);</span>
+<span class="nc" id="L23">            safe = Turn.takeTurn(board, bombNum);</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">            if (board.getFlagList().size() == bombNum) {</span>
+<span class="nc" id="L25">                int winCount = 0;</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">                for (int i = 0; i &lt; board.getFlagList().size(); i++) {</span>
+<span class="nc" id="L27">                    int[] index =  board.getFlagList().get(i);</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">                    if (grid[index[0]][index[1]].getType() == -1) {</span>
+<span class="nc" id="L29">                        winCount ++;</span>
+                    }
+                }
+<span class="nc bnc" id="L32" title="All 2 branches missed.">                if (winCount == bombNum) {</span>
+<span class="nc" id="L33">                    System.out.println(&quot;All bombs flagged. Congratulations, you win!&quot;);</span>
+<span class="nc" id="L34">                    safe = false;</span>
+                }
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            } else if (cellsLeft == bombNum) {</span>
+<span class="nc" id="L37">                System.out.println(&quot;Only bombs remaining. Congratulations, you win!&quot;);</span>
+<span class="nc" id="L38">                safe = false;</span>
+            }
+<span class="nc" id="L40">        }</span>
+<span class="nc" id="L41">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
