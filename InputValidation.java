@@ -36,7 +36,7 @@ public class InputValidation {
     public static boolean verifyTwoChoice(String input, String option1, String option2) {
         System.out.println(input);
         Scanner reader = new Scanner(System.in);
-        String answer = reader.next();
+        String answer = reader.nextLine();
         while (!answer.equalsIgnoreCase(option1) && !answer.equalsIgnoreCase(option2)) {
             System.out.println("Please answer " + option1 + " or " + option2 + ".");
             answer = reader.next();

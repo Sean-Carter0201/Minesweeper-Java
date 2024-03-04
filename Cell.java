@@ -20,7 +20,7 @@ public class Cell {
         this.coord[0] = x;
         this.coord[1] = y;
     }
-public int getStatus() {
+    public int getStatus() {
         return status;
     }
 

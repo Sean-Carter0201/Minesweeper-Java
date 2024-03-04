@@ -1,5 +1,5 @@
 public class Settings {
-    private int gridSize = 18;
+    private int gridSize = 4;
     public int getGridSize() {
         return gridSize;
     }
@@ -19,5 +19,12 @@ public class Settings {
     }
     public void setChallengeMode(boolean newChallengeMode) {
         this.challengeMode = newChallengeMode;
+    }
+    private int bombNum = 0;
+    public int getBomNum() {
+        return bombNum;
+    }
+    public void setBombNum(int newBombNum) {
+        this.bombNum = newBombNum;
     }
 }

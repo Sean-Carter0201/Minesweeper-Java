@@ -23,11 +23,11 @@ public class Turn {
         return goodTurn;
     }
     public boolean chooseAction() {
-        return InputValidation.verifyTwoChoice("Do you wish to flag a cell, or explore a new one?",
+        return InputValidation.verifyTwoChoice("Do you wish to flag/unflag a cell, or explore a new one?",
                 "Flag", "Explore");
 
     }
-    public static boolean takeTurn(Board board) {
+    public static boolean takeTurn(Board board, int bombNum) {
         Turn turn = new Turn();
         turn.setFlagCheck(turn.chooseAction());
         Cell[][] grid = board.getGrid();
@@ -36,7 +36,21 @@ public class Turn {
         int[] index = Main.coordToIndex(coord, size);
         turn.setCoord(index);
         if (turn.getFlagCheck()) {
-            grid[index[0]][index[1]].setStatus(2);
+            if (board.getFlagList().size() < bombNum) {
+                if (grid[index[0]][index[1]].getStatus() == 2) {
+                    if (InputValidation.verifyTwoChoice("Do you wish to unflag this coordinate?",
+                            "Yes", "No")) {
+                        grid[index[0]][index[1]].setStatus(0);
+                        board.popFlagList(grid[index[0]][index[1]].getCoord());
+                    }
+                } else {
+                    grid[index[0]][index[1]].setStatus(2);
+                    board.appendFlagList(grid[index[0]][index[1]].getCoord());
+                }
+            } else {
+                System.out.println(bombNum + " coordinates flagged already, you may only flag as many coordinates as there are bombs.");
+            }
+
         } else {
             if (grid[index[0]][index[1]].getStatus() == 2) {
                 if (InputValidation.verifyTwoChoice("Are you sure? You flagged this coordinate.",
