@@ -5,10 +5,15 @@ public class Board {
     final private Cell[][] grid;
     private ArrayList<String>[] axes;
     private ArrayList<int[]> flagList = new ArrayList<>();
-    public Board(Cell[][] newGrid, ArrayList<String>[] newAxes,Settings settings) {  //Constructor Class for Board
+    public Board(Settings settings) {  //Constructor Class for Board
+        int gridSize = settings.getGridSize();
+        Cell[][] newGrid = new Cell[gridSize][gridSize];
+        ArrayList[] newAxes = new ArrayList[2];
+        for (int i = 0; i < 2; i++) {
+            newAxes[i] = new ArrayList<String>();
+        }
         grid = newGrid;
         axes = newAxes;
-        int gridSize = newGrid.length;
         for (int i = 0; i < gridSize; i++) {
             axes[0].add(Main.numToChar(i + 1));
             axes[1].add(String.valueOf(((gridSize - i))));
@@ -35,7 +40,7 @@ public class Board {
                 }
                 test.add(grid[i][j].getType());
             }
-            System.out.println(test);
+            //System.out.println(test);
         }
     }
     public Cell[][] getGrid() {
